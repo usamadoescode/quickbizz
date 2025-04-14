@@ -1,0 +1,19 @@
+{% load static%}
+
+<!DOCTYPE html>
+<head>
+    <title>Login Business</title>
+</head>
+<body>
+    <h2>Register Business</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <label for="username"> Username:</label><br>
+        <input  type="text" name="username" required><br><br>
+        <label for="password"> Password:</label><br>
+
+        <input  type="password" name="password" required><br><br>
+<input type="submit" value="login">
+    </form>
+</body>
+</html>

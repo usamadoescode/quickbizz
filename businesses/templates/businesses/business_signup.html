@@ -1,0 +1,55 @@
+{% load static%}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register Business</title>
+</head>
+<body>
+    <h2>Register Business</h2>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <!-- User Info -->
+        <label for="username">Username:</label><br>
+        <input type="text" name="username" required><br><br>
+
+        <label for="password">Password:</label><br>
+        <input type="password" name="password" required><br><br>
+
+        <label for="confirm_password">Confirm Password:</label><br>
+        <input type="password" name="confirm_password" required><br><br>
+
+        <!-- Business Info -->
+        <label for="business_name">Business Name:</label><br>
+        <input type="text" name="business_name" required><br><br>
+
+        
+
+        <label for="business_email">Business Email:</label><br>
+        <input type="email" name="business_email" required><br><br>
+
+        <label for="business_num">Business Number:</label><br>
+        <input type="text" name="business_num" required><br><br>
+
+        <label for="business_location">Business Location:</label><br>
+        <input type="text" name="business_location" required><br><br>
+
+        <label for="business_category">Business Category:</label><br>
+        <input type="text" name="business_category" required><br><br>
+
+        <label for="business_logo">Business Logo:</label><br>
+        <input type="file" name="business_logo"><br><br>
+
+        <label for="opening_time">Opening Time:</label><br>
+        <input type="time" name="opening_time" required><br><br>
+
+        <label for="closing_time">Closing Time:</label><br>
+        <input type="time" name="closing_time" required><br><br>
+
+        <input type="submit" value="Register">
+        <button type="button" onclick="window.location.href='{% url 'business_login' %}'">Already have an account? Sign In</button>
+    </form>
+</body>
+</html>

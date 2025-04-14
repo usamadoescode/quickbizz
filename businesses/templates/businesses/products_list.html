@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuickBizz</title>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header style="text-align: center; padding: 20px; background-color: #f4f4f4;">
+        <h1>QuickBizz</h1>
+    </header>
+
+    <!-- Navigation Links (Horizontal) -->
+    <nav style="text-align: center; padding: 10px;">
+        <ul style="list-style-type: none; padding: 0;">
+            <li style="display: inline; margin-right: 20px;"><a href="{% url 'business_profile_view' username=request.user.username %}">Profile</a></li>
+            <li style="display: inline; margin-right: 20px;"><a href="{% url 'products_list' %}">Products</a></li>
+            <li style="display: inline; margin-right: 20px;"><a href="{% url 'add_product' %}">Add Products</a></li>
+            <li style="display: inline; margin-right: 20px;"><a href="#">Inbox</a></li>
+        </ul>
+    </nav>
+<div>
+    <table border="1" style="width: 100%; border-collapse: collapse; text-align: left;">
+        <tr>
+            <th>Product Name</th>
+            <th>Product Description</th>
+            <th>Product Price</th>
+            <th>Product Image</th>
+            <th>Is Available</th>
+        </tr>
+    
+        {% for product in products_list %}
+        <tr>
+            <td>{{ product.product_name }}</td>
+            <td>{{ product.product_description }}</td>
+            <td>{{ product.product_price }}</td>
+            <td><img src="{{ product.product_image.url }}" alt="Product Image" style="width: 100px; height: 100px;"></td>
+            <td>
+                {%if product.is_available%}
+                    Available
+                {%else%}
+                    Not Available
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    
+    </table>
+    
+
+</div>
+
+
+</body>
+</html>

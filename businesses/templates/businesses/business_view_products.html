@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ business.business_name }} - Products</title>
+</head>
+<body>
+    <h1>Products for {{ business.business_name }}</h1>
+    
+    {% if products %}
+        <div class="products-list">
+            {% for product in products %}
+                <div class="product-card">
+                    {% if product.product_image %}
+                        <img src="{{ product.product_image.url }}" alt="{{ product.product_name }} Image" class="product-image">
+                    {% else %}
+                        <div class="no-image">No Image Available</div>
+                    {% endif %}
+                    <h2>{{ product.product_name }}</h2>
+                    <p>{{ product.product_description }}</p>
+                    <p><strong>Price:</strong> {{ product.price }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No products available for this business.</p>
+    {% endif %}
+    
+</body>
+</html>

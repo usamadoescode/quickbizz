@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to QuickBizz</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin: 50px; }
+        .container { max-width: 600px; margin: auto; }
+        .btn { padding: 10px 20px; margin: 10px; text-decoration: none; color: white; border-radius: 5px; }
+        .buyer { background-color: blue; }
+        .seller { background-color: green; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to QuickBizz</h1>
+        <p>Connecting buyers and sellers in one place!</p>
+        <a href="{% url 'business_register' %}" class="btn seller">I'm a Seller</a>
+    </div>
+</body>
+</html>

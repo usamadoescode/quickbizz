@@ -1,0 +1,32 @@
+{% load static%}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Products</title>
+</head>
+<body>
+    <h2>Add Product</h2>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+
+        <label for="product_name">Product Name:</label><br>
+        <input type="text" name="product_name" required> <br><br>
+        <label for="product_description">Product Description:</label><br>
+        <input type="text" name="product_description" required><br><br>
+        <label for="product_price">Product Price:</label><br>
+        <input type="number" name="product_price" step="0.01" min="0" placeholder="0.00">
+        <label for="product_image">Product Image:</label><br>
+        <input type="file" name="product_image" required><br><br>
+        <label for="is_available">Is Available:</label><br>
+        <input type="checkbox" name="is_available"><br><br>
+
+  
+
+        <input type="submit" value="Add product">
+        <button type="button" onclick="window.location.href='{% url 'business_dashboard' %}'">View Dashboard</button>
+    </form>
+</body>
+</html>

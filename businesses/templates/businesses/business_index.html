@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Profiles</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .business-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+        .business-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 10px;
+            width: 300px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            overflow: hidden;
+        }
+        .business-logo {
+            max-width: 80px;
+            max-height: 80px;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+        .business-card table {
+            width: 100%;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        .business-card th {
+            text-align: left;
+            width: 40%;
+            padding-right: 10px;
+        }
+        .business-card td {
+            text-align: left;
+        }
+        .no-logo {
+            text-align: center;
+            font-size: 12px;
+            color: #777;
+        }
+        @media screen and (max-width: 600px) {
+            .business-card {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Business Profiles</h1>
+        <div class="business-list">
+            {% for business in business %}
+                <div class="business-card">
+                    {% if business.business_logo %}
+                        <img src="{{ business.business_logo.url }}" alt="{{ business.business_name }} Logo" class="business-logo">
+                    {% else %}
+                        <div class="no-logo">No Logo Available</div>
+                    {% endif %}
+                    <table>
+                        <tr>
+                            <th>Name:</th>
+                            <td>{{ business.business_name }}</td>
+                        </tr>
+                        <tr>
+                            <th>Email:</th>
+                            <td>{{ business.business_email }}</td>
+                        </tr>
+                        <tr>
+                            <th>Phone:</th>
+                            <td>{{ business.business_num }}</td>
+                        </tr>
+                        <tr>
+                            <th>Location:</th>
+                            <td>{{ business.business_location }}</td>
+                        </tr>
+                        <tr>
+                            <th>Category:</th>
+                            <td>{{ business.business_category }}</td>
+                        </tr>
+                        <tr>
+                            <th>Opening Time:</th>
+                            <td>{% if business.opening_time %} {{ business.opening_time|time:"H:i" }} {% else %} Not Available {% endif %}</td>
+                        </tr>
+                        <tr>
+                            <th>Closing Time:</th>
+                            <td>{% if business.closing_time %} {{ business.closing_time|time:"H:i" }} {% else %} Not Available {% endif %}</td>
+                        </tr>
+                    </table>
+                    <a href="{% url 'view_business_products' username=business.business_name %}" class="view-products-btn">View Products</a>
+
+                </div>
+            {% empty %}
+                <p>No businesses available at the moment.</p>
+
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

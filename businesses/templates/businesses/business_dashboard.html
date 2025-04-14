@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuickBizz</title>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header style="text-align: center; padding: 20px; background-color: #f4f4f4;">
+        <h1>QuickBizz</h1>
+    </header>
+
+    <!-- Navigation Links (Horizontal) -->
+    <nav style="text-align: center; padding: 10px;">
+        <ul style="list-style-type: none; padding: 0;">
+            <li style="display: inline; margin-right: 20px;"><a href="{% url 'business_profile_view' username=request.user.username %}">Profile</a></li>
+            <li style="display: inline; margin-right: 20px;"><a href="{% url 'products_list' %}">Products</a></li>
+            <li style="display: inline; margin-right: 20px;"><a href="{% url 'add_product' %}">Add Products</a></li>
+            <li style="display: inline; margin-right: 20px;"><a href="{% url 'business_index' %}">Businessses</a></li>
+
+            <li style="display: inline; margin-right: 20px;"><a href="#">Inbox</a></li>
+        </ul>
+    </nav>
+
+    
+    
+
+</body>
+</html>
