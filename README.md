@@ -83,9 +83,9 @@ DM me for a live demo or collaboration ideas.
 
 ## 📌 Author
 
-**Name:** [Your Name]  
-**GitHub:** [Your GitHub Link]  
-**LinkedIn:** [Your LinkedIn Profile]
+**Name:** [Usama Ahmed]  
+**GitHub:** [https://github.com/usamadoescode/]  
+**LinkedIn:** [https://www.linkedin.com/in/usamadoescode/]
 
 ---
 
