@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, render,redirect
 from django.contrib.auth.models import User
 from django.contrib import messages
-from .models import business_profile
+from .models import business_profile,ProductRequest,notifications
 from .models import Product
 from django.contrib.auth import authenticate, login,logout
 from django.contrib.auth.decorators import login_required
@@ -13,10 +13,42 @@ def business_index(request):
     return render(request,'businesses/business_index.html')
 
 
-@login_required(login_url='business_login') 
+
+
+@login_required(login_url='business_login')
 def business_dashboard(request):
-    business = business_profile.objects.get(user=request.user)
-    return render(request, 'businesses/business_dashboard.html', {'business': business})
+    # Get the business profile of the logged-in user
+    business = get_object_or_404(business_profile, user=request.user)
+
+    # Get the notifications related to the logged-in user
+    user_notifications = notifications.objects.filter(user=request.user).order_by('-created_at')
+
+    # Sent requests (requests this business made to others)
+    sent_requests = ProductRequest.objects.filter(requested_by=business)
+    sent_accepted = sent_requests.filter(status='Accepted')
+    sent_rejected = sent_requests.filter(status='Rejected')
+
+    # Received requests (requests others made for this business's products)
+    received_requests = ProductRequest.objects.filter(product__business=business)
+    received_accepted = received_requests.filter(status='Accepted')
+    received_rejected = received_requests.filter(status='Rejected')
+
+    context = {
+        'business': business,
+        'user_notifications': user_notifications,
+
+        # Sent stats
+        'sent_requests': sent_requests,
+        'sent_accepted': sent_accepted,
+        'sent_rejected': sent_rejected,
+
+        # Received stats
+        'received_requests': received_requests,
+        'received_accepted': received_accepted,
+        'received_rejected': received_rejected,
+    }
+
+    return render(request, 'businesses/business_dashboard.html', context)
 
 
 
@@ -163,3 +195,84 @@ def business_login(request):
 def business_logout(request):
     logout(request)
     return redirect('business_login')
+
+
+
+
+@login_required
+def product_request(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+
+    # Create the product request
+    product_request_obj = ProductRequest.objects.create(
+        product=product,
+        business=product.business,  # Receiver
+        requested_by=request.user.business_profile,  # Sender
+        status='Pending'
+    )
+
+    # Notify Receiver (product owner)
+    receiver_msg = f"'{request.user.business_profile.business_name}' has requested your product '{product.product_name}'."
+    notifications.objects.create(
+        user=product.business.user,
+        notification_content=receiver_msg,
+        related_request=product_request_obj
+    )
+
+    # Notify Requester
+    requester_msg = f"You requested '{product.product_name}' from '{product.business.business_name}'."
+    notifications.objects.create(
+        user=request.user,
+        notification_content=requester_msg,
+        related_request=product_request_obj
+    )
+
+    messages.success(request, f"You requested the product: {product.product_name}")
+    return redirect('business_dashboard')
+
+@login_required
+def manage_product_request(request, request_id, action):
+    product_request = get_object_or_404(ProductRequest, id=request_id)
+
+    if product_request.product.business.user != request.user:
+        messages.error(request, "Permission denied.")
+        return redirect('business_dashboard')
+
+    if action not in ['accept', 'reject']:
+        messages.error(request, "Invalid action.")
+        return redirect('business_dashboard')
+
+    product_request.status = 'Accepted' if action == 'accept' else 'Rejected'
+    product_request.save()
+
+    # Notify the requester
+    requester_msg = f"'{request.user.business_profile.business_name}' has {product_request.status.lower()} your request for '{product_request.product.product_name}'."
+    notifications.objects.create(
+        user=product_request.requested_by.user,
+        notification_content=requester_msg,
+        related_request=product_request
+    )
+
+    # Notify the receiver (confirmation to self)
+    receiver_msg = f"You {product_request.status.lower()} the request for '{product_request.product.product_name}' from '{product_request.requested_by.business_name}'."
+    notifications.objects.create(
+        user=request.user,
+        notification_content=receiver_msg,
+        related_request=product_request
+    )
+
+    messages.success(request, f"Request {product_request.status}.")
+    return redirect('business_dashboard')
+
+@login_required
+def view_notifications(request):
+    user_notifications = notifications.objects.filter(user=request.user).order_by('-created_at')
+    # Mark all as read
+    user_notifications.filter(is_read=False).update(is_read=True)
+    return render(request, 'businesses/notifications.html', {'notifications': user_notifications})
+
+@login_required
+def clear_notifications(request):
+    if request.method == 'POST':
+        notifications.objects.filter(user=request.user).delete()
+    return redirect('view_notifications')  # change to your actual notifications view name

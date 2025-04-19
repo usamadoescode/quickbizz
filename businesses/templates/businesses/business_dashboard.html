@@ -4,28 +4,187 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QuickBizz</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            background-color: #f7f9fb;
+            color: #333;
+        }
+
+        /* Header Section */
+        header {
+            text-align: center;
+            padding: 20px;
+            background-color: #007bff;
+            color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        /* Navigation Links */
+        nav {
+            background-color: white;
+            padding: 10px 0;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+            text-align: center;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            display: inline-block;
+        }
+
+        nav li {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        nav a {
+            color: #007bff;
+            text-decoration: none;
+            padding: 10px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            background-color: #f1f1f1;
+            border-radius: 5px;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Dashboard Title */
+        .container h2 {
+            text-align: center;
+            font-size: 24px;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        /* Section Styles */
+        h3 {
+            color: #007bff;
+            margin-top: 30px;
+            font-size: 20px;
+        }
+
+        p {
+            font-size: 16px;
+            margin: 5px 0;
+        }
+
+        /* Notification Styles */
+        .notification {
+            background-color: #f9f9f9;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .notification p {
+            margin: 0;
+        }
+
+        .notification .date {
+            font-size: 0.9em;
+            color: #888;
+        }
+
+        .notification-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        /* Footer Section */
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #333;
+            color: white;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
 
     <!-- Header Section -->
-    <header style="text-align: center; padding: 20px; background-color: #f4f4f4;">
+    <header>
         <h1>QuickBizz</h1>
     </header>
 
-    <!-- Navigation Links (Horizontal) -->
-    <nav style="text-align: center; padding: 10px;">
-        <ul style="list-style-type: none; padding: 0;">
-            <li style="display: inline; margin-right: 20px;"><a href="{% url 'business_profile_view' username=request.user.username %}">Profile</a></li>
-            <li style="display: inline; margin-right: 20px;"><a href="{% url 'products_list' %}">Products</a></li>
-            <li style="display: inline; margin-right: 20px;"><a href="{% url 'add_product' %}">Add Products</a></li>
-            <li style="display: inline; margin-right: 20px;"><a href="{% url 'business_index' %}">Businessses</a></li>
-
-            <li style="display: inline; margin-right: 20px;"><a href="#">Inbox</a></li>
+    <!-- Navigation Links -->
+    <nav>
+        <ul>
+            <li><a href="{% url 'business_profile_view' username=request.user.username %}">Profile</a></li>
+            <li><a href="{% url 'products_list' %}">Products</a></li>
+            <li><a href="{% url 'add_product' %}">Add Products</a></li>
+            <li><a href="{% url 'business_index' %}">Businesses</a></li>
+            <li><a href="{% url 'view_notifications' %}">Notifications</a></li>
         </ul>
     </nav>
 
-    
-    
+    <!-- Main Container -->
+    <div class="container">
+        <h2>Dashboard Overview</h2>
+
+        <!-- Sent Requests Section -->
+        <div>
+            <h3>Requests You Sent</h3>
+            <p>Total Sent: {{ sent_requests|length }}</p>
+            <p>Accepted: {{ sent_accepted|length }}</p>
+            <p>Rejected: {{ sent_rejected|length }}</p>
+        </div>
+
+        <!-- Received Requests Section -->
+        <div>
+            <h3>Requests You Received</h3>
+            <p>Total Received: {{ received_requests|length }}</p>
+            <p>Accepted: {{ received_accepted|length }}</p>
+            <p>Rejected: {{ received_rejected|length }}</p>
+        </div>
+
+        <!-- Notifications -->
+        <div>
+            <h3>Recent Alerts</h3>
+            {% if user_notifications %}
+                {% for notification in user_notifications %}
+                    <div class="notification">
+                        <div>
+                            <p>{{ notification.message }}</p>
+                            <span class="date">{{ notification.created_at }}</span>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No notifications yet.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; 2025 QuickBizz. All rights reserved.</p>
+    </footer>
 
 </body>
 </html>

@@ -16,4 +16,11 @@ urlpatterns = [
     path('add_product/',views.add_product, name='add_product'),
     path('products_list/',views.products_list, name='products_list'),
     path('<str:username>/products/', views.view_business_products, name='view_business_products'),
+    path('product_request/<int:product_id>/', views.product_request, name='product_request'),
+    path('manage_product_request/<int:request_id>/<str:action>/', views.manage_product_request, name='manage_product_request'),
+
+    # Notifications
+    path('notifications/', views.view_notifications, name='view_notifications'),
+    path('notifications/clear/', views.clear_notifications, name='clear_notifications'),
+
 ]

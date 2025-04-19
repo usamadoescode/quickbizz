@@ -1,32 +1,144 @@
-{% load static%}
-
+{% load static %}
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Add Products</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Product</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7fb;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #007bff;
+            font-size: 28px;
+            margin-bottom: 30px;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="file"],
+        input[type="checkbox"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        input[type="number"]:focus,
+        input[type="text"]:focus,
+        input[type="file"]:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        input[type="checkbox"] {
+            width: auto;
+            margin-right: 10px;
+        }
+
+        input[type="submit"],
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        input[type="submit"]:hover,
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .form-footer {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .form-footer a {
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        .form-footer a:hover {
+            text-decoration: underline;
+        }
+
+    </style>
 </head>
 <body>
-    <h2>Add Product</h2>
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
 
+    <div class="container">
+        <h2>Add Product</h2>
 
-        <label for="product_name">Product Name:</label><br>
-        <input type="text" name="product_name" required> <br><br>
-        <label for="product_description">Product Description:</label><br>
-        <input type="text" name="product_description" required><br><br>
-        <label for="product_price">Product Price:</label><br>
-        <input type="number" name="product_price" step="0.01" min="0" placeholder="0.00">
-        <label for="product_image">Product Image:</label><br>
-        <input type="file" name="product_image" required><br><br>
-        <label for="is_available">Is Available:</label><br>
-        <input type="checkbox" name="is_available"><br><br>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="product_name">Product Name:</label>
+                <input type="text" name="product_name" required>
+            </div>
 
-  
+            <div class="form-group">
+                <label for="product_description">Product Description:</label>
+                <input type="text" name="product_description" required>
+            </div>
 
-        <input type="submit" value="Add product">
-        <button type="button" onclick="window.location.href='{% url 'business_dashboard' %}'">View Dashboard</button>
-    </form>
+            <div class="form-group">
+                <label for="product_price">Product Price:</label>
+                <input type="number" name="product_price" step="0.01" min="0" placeholder="0.00">
+            </div>
+
+            <div class="form-group">
+                <label for="product_image">Product Image:</label>
+                <input type="file" name="product_image" required>
+            </div>
+
+            <div class="form-group">
+                <label for="is_available">Is Available:</label>
+                <input type="checkbox" name="is_available">
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Add Product">
+            </div>
+
+            <div class="form-footer">
+                <button type="button" onclick="window.location.href='{% url 'business_dashboard' %}'">View Dashboard</button>
+            </div>
+        </form>
+    </div>
+
 </body>
 </html>

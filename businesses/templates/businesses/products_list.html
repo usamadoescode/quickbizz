@@ -4,54 +4,149 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QuickBizz</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            background-color: #f7f9fb;
+            color: #333;
+        }
+
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            background-color: #fff;
+            padding: 15px 0;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        nav li {
+            display: inline-block;
+            margin: 0 15px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #007bff;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #0056b3;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f1f5f9;
+        }
+
+        tr:hover {
+            background-color: #e2ecf7;
+        }
+
+        img {
+            border-radius: 6px;
+            border: 1px solid #ddd;
+        }
+
+        @media (max-width: 768px) {
+            th, td {
+                padding: 10px;
+                font-size: 14px;
+            }
+
+            nav li {
+                display: block;
+                margin: 10px 0;
+            }
+        }
+    </style>
 </head>
 <body>
 
-    <!-- Header Section -->
-    <header style="text-align: center; padding: 20px; background-color: #f4f4f4;">
+    <!-- Header -->
+    <header>
         <h1>QuickBizz</h1>
     </header>
 
-    <!-- Navigation Links (Horizontal) -->
-    <nav style="text-align: center; padding: 10px;">
-        <ul style="list-style-type: none; padding: 0;">
-            <li style="display: inline; margin-right: 20px;"><a href="{% url 'business_profile_view' username=request.user.username %}">Profile</a></li>
-            <li style="display: inline; margin-right: 20px;"><a href="{% url 'products_list' %}">Products</a></li>
-            <li style="display: inline; margin-right: 20px;"><a href="{% url 'add_product' %}">Add Products</a></li>
-            <li style="display: inline; margin-right: 20px;"><a href="#">Inbox</a></li>
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="{% url 'business_profile_view' username=request.user.username %}">Profile</a></li>
+            <li><a href="{% url 'products_list' %}">Products</a></li>
+            <li><a href="{% url 'add_product' %}">Add Products</a></li>
+            <li><a href="#">Inbox</a></li>
         </ul>
     </nav>
-<div>
-    <table border="1" style="width: 100%; border-collapse: collapse; text-align: left;">
-        <tr>
-            <th>Product Name</th>
-            <th>Product Description</th>
-            <th>Product Price</th>
-            <th>Product Image</th>
-            <th>Is Available</th>
-        </tr>
-    
-        {% for product in products_list %}
-        <tr>
-            <td>{{ product.product_name }}</td>
-            <td>{{ product.product_description }}</td>
-            <td>{{ product.product_price }}</td>
-            <td><img src="{{ product.product_image.url }}" alt="Product Image" style="width: 100px; height: 100px;"></td>
-            <td>
-                {%if product.is_available%}
-                    Available
-                {%else%}
-                    Not Available
-                {% endif %}
-            </td>
-        </tr>
-        {% endfor %}
-    
-    </table>
-    
 
-</div>
-
+    <!-- Product Table -->
+    <div class="container">
+        <table>
+            <tr>
+                <th>Product Name</th>
+                <th>Product Description</th>
+                <th>Product Price</th>
+                <th>Product Image</th>
+                <th>Availability</th>
+            </tr>
+        
+            {% for product in products_list %}
+            <tr>
+                <td>{{ product.product_name }}</td>
+                <td>{{ product.product_description }}</td>
+                <td>Rs. {{ product.product_price }}</td>
+                <td>
+                    <img src="{{ product.product_image.url }}" alt="Product Image" style="width: 100px; height: 100px; object-fit: cover;">
+                </td>
+                <td>
+                    {% if product.is_available %}
+                        <span style="color: green; font-weight: bold;">Available</span>
+                    {% else %}
+                        <span style="color: red; font-weight: bold;">Not Available</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
 
 </body>
 </html>
