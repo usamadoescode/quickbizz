@@ -70,6 +70,11 @@ QuickBizz allows businesses to **collaborate rather than compete**.
 ![image](https://github.com/user-attachments/assets/bce7dd7c-f7a6-4705-826a-a255c6e063fa)
 ![image](https://github.com/user-attachments/assets/546ebca9-7736-476b-8b62-9db4f73a7051)
 ![image](https://github.com/user-attachments/assets/e33ebb78-a312-4fa6-8513-ee9319904d58)
+![image](https://github.com/user-attachments/assets/a5ddf8b6-13b4-4ee8-b574-aac41fc9b323)
+![image](https://github.com/user-attachments/assets/e2571200-a382-4994-bad1-68c7da60c01a)
+![image](https://github.com/user-attachments/assets/6bd645c3-6053-4d22-8029-82492a5ba711)
+
+
 
 
 
