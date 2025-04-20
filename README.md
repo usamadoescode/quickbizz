@@ -56,7 +56,8 @@ QuickBizz allows businesses to **collaborate rather than compete**.
 - ✔️ Commission Calculation on Shared Sales
 
 ---
-
+## DEMO:
+![QuickBizz Demo](gg-ezgif.com-video-to-gif-converter.gif)
 ## 📸 Screenshots
 
 *![image](https://github.com/user-attachments/assets/167a255c-f503-4134-9b71-11692fe5ab3d)
